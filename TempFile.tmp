@@ -1,0 +1,27 @@
+*** Begin Patch
+*** Update File: app/api/chat/route.ts
+@@
+-const deepseek = createOpenAI({
+-  apiKey: process.env.DEEPSEEK_API_KEY,
+-  baseURL: process.env.DEEPSEEK_BASE_URL ?? 'https://api.deepseek.com/v1',
+-  name: 'deepseek',
+-});
+-
+ export async function POST(req: Request) {
+   try {
++    const apiKey = process.env.DEEPSEEK_API_KEY;
++    if (!apiKey) {
++      console.error('Missing DEEPSEEK_API_KEY environment variable.');
++      return Response.json(
++        { error: 'Server misconfigured: set DEEPSEEK_API_KEY before running builds or API requests.' },
++        { status: 500 }
++      );
++    }
++
++    const deepseek = createOpenAI({
++      apiKey,
++      baseURL: process.env.DEEPSEEK_BASE_URL ?? 'https://api.deepseek.com/v1',
++      name: 'deepseek',
++    });
++
+*** End Patch
