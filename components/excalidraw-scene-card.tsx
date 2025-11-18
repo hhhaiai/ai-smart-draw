@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ClipboardCopy, ClipboardCheck } from "lucide-react";
+import {ClipboardCopy, ClipboardCheck, RefreshCcw} from "lucide-react";
 import { useExcalidraw } from "@/contexts/excalidraw-context";
 
 interface Props {
@@ -71,7 +71,8 @@ export function ExcalidrawSceneCard({ onClear, onHistory, historyDisabled }: Pro
                 </div>
                 <div className="flex gap-2 flex-wrap">
                     <Button type="button" size="sm" variant="outline" onClick={onClear}>
-                        清空画布
+                        <RefreshCcw className="h-4 w-4 mr-2" />
+                        重置
                     </Button>
                     <Button
                         type="button"
