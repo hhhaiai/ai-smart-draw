@@ -11,9 +11,11 @@ A next.js web application that integrates AI capabilities with draw.io diagrams.
 
 An intelligent diagramming application built with Next.js that harnesses the power of AI to create and manipulate various types of diagrams including Draw.io (diagrams.net), Mermaid, PlantUML, and Excalidraw through natural language commands.
 
-![AI Smart Draw Demo](https://github.com/user-attachments/assets/b2eef5f3-b335-4e71-a755-dc2e80931979)
-
-🔗 **Live Demo**: [https://ai-smart-draw.vercel.app/](https://ai-smart-draw.vercel.app/)
+🔗 **Live Demo**: 
+![Draw.io](public/d9344e69-1e5d-4440-8a43-7591c794e16d.png)
+![Mermaid](public/7185b500-522c-4a91-91f0-1ca4b74c79bc.png)
+![PlanUML](public/2abe9792-359b-440f-877f-4b8ab20b7495.png)
+![Excalidraw](public/ebdcfd3a-9c68-42ad-9cde-0cff9c073e27.png)
 
 ## 🌟 Key Features
 
