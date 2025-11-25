@@ -10,6 +10,7 @@ import PlantUMLChatPanel from "@/components/plantuml-chat-panel";
 import KrokiChatPanel from "@/components/kroki-chat-panel";
 import GraphvizChatPanel from "@/components/graphviz-chat-panel";
 import { ModelConfigDialog } from "@/components/model-config-dialog";
+import { useModelConfig } from "@/contexts/model-config-context";
 import { cn } from "@/lib/utils";
 
 type PanelType = "drawio" | "excalidraw" | "mermaid" | "plantuml" | "kroki" | "graphviz";
@@ -26,6 +27,7 @@ export function CollapsibleChatPanel({
   onCollapseChange
 }: CollapsibleChatPanelProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { activeProfile } = useModelConfig();
 
   useEffect(() => {
     onCollapseChange?.(isCollapsed);

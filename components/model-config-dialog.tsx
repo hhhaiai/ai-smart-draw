@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Settings } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Plus, Settings, Trash2 } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -16,6 +16,13 @@ import { Input } from "@/components/ui/input";
 import { useModelConfig, defaultModelConfig, ModelConfig } from "@/contexts/model-config-context";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 interface ModelConfigDialogProps {
     className?: string;
@@ -28,7 +35,18 @@ export function ModelConfigDialog({
     buttonVariant = "outline",
     size = "md",
 }: ModelConfigDialogProps) {
-    const { config, setConfig, reset } = useModelConfig();
+    const {
+        config,
+        profiles,
+        activeProfile,
+        activeProfileId,
+        setActiveProfile,
+        setConfig,
+        createProfile,
+        renameProfile,
+        deleteProfile,
+        reset,
+    } = useModelConfig();
     const [open, setOpen] = useState(false);
     const [draft, setDraft] = useState<ModelConfig>(config);
     const [models, setModels] = useState<string[]>([]);
@@ -40,6 +58,13 @@ export function ModelConfigDialog({
             setDraft(config);
         }
     }, [open, config]);
+
+    useEffect(() => {
+        if (open) {
+            setDraft(activeProfile?.config || defaultModelConfig);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeProfileId]);
 
     const handleSave = () => {
         setConfig(draft);
@@ -82,6 +107,10 @@ export function ModelConfigDialog({
         }
     };
 
+    const canDelete = profiles.length > 1;
+
+    const activeName = useMemo(() => activeProfile?.name || "默认配置", [activeProfile]);
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -92,6 +121,9 @@ export function ModelConfigDialog({
                     className={cn("flex items-center gap-2 h-8 px-2", className)}
                 >
                     <Settings className="h-4 w-4" />
+                    <span className="text-xs text-muted-foreground truncate max-w-[96px] hidden sm:inline">
+                        {activeName}
+                    </span>
                     {/*<span className="hidden sm:inline">模型设置</span>*/}
                 </Button>
             </DialogTrigger>
@@ -104,6 +136,60 @@ export function ModelConfigDialog({
                 </DialogHeader>
 
                 <div className="space-y-4">
+                    <div className="flex flex-col gap-2 rounded-md border p-3 bg-muted/40">
+                        <div className="flex items-center gap-2">
+                            <Select
+                                value={activeProfileId}
+                                onValueChange={(id) => setActiveProfile(id)}
+                            >
+                                <SelectTrigger className="h-8 w-62 text-sm">
+                                    <SelectValue placeholder="选择配置" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {profiles.map((p) => (
+                                        <SelectItem key={p.id} value={p.id}>
+                                            {p.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <Button
+                                type="button"
+                                size="sm"
+                                variant="secondary"
+                                className="h-8 px-2"
+                                onClick={() => createProfile()}
+                            >
+                                <Plus className="h-4 w-4 mr-1" />
+                                新增配置
+                            </Button>
+                            <Button
+                                type="button"
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 px-2 text-destructive"
+                                disabled={!canDelete}
+                                onClick={() => canDelete && deleteProfile(activeProfileId)}
+                            >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                删除
+                            </Button>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <label className="text-sm space-y-1">
+                                <span className="block font-medium">配置名称</span>
+                                <Input
+                                    value={activeProfile?.name || ""}
+                                    placeholder="如：公司代理 / 个人账号"
+                                    onChange={(e) => renameProfile(activeProfileId, e.target.value)}
+                                />
+                            </label>
+                            <div className="text-xs text-muted-foreground self-end">
+                                选择或管理不同模型账号/网关，快速切换。
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <label className="text-sm space-y-1">
                             <span className="block font-medium">API Key</span>
@@ -131,6 +217,19 @@ export function ModelConfigDialog({
                                 placeholder="gpt-4o / gpt-4o-mini"
                                 onChange={(e) => handleFieldChange("model", e.target.value)}
                             />
+                            <div className="flex items-center gap-3">
+
+                                <Button
+                                    type="button"
+                                    size="sm"
+                                    variant="secondary"
+                                    onClick={fetchModels}
+                                    disabled={loadingModels}
+                                    className="text-xs underline hover:no-underline"
+                                >
+                                    {loadingModels ? "获取中..." : "拉取列表"}
+                                </Button>
+                            </div>
                         </label>
 
                         <label className="text-sm space-y-1">
@@ -154,30 +253,9 @@ export function ModelConfigDialog({
                                 可根据模型限额调整，避免长 JSON 被截断
                             </span>
                         </label>
-
-                        <div className="text-xs text-muted-foreground space-y-1 border rounded-md p-2">
-                            <div>提示</div>
-                            <ul className="list-disc pl-4 space-y-1">
-                                <li>保存仅写入 localStorage，不会上传到服务器。</li>
-                                <li>留空字段会回落到服务器的默认环境变量。</li>
-                                <li>切换 Tab 后生效于所有聊天/制图接口。</li>
-                            </ul>
-                        </div>
                     </div>
 
                     <div className="space-y-2">
-                        <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium">快速获取可用模型</span>
-                            <Button
-                                type="button"
-                                size="sm"
-                                variant="secondary"
-                                onClick={fetchModels}
-                                disabled={loadingModels}
-                            >
-                                {loadingModels ? "获取中..." : "拉取列表"}
-                            </Button>
-                        </div>
                         {modelsError && (
                             <p className="text-xs text-destructive">{modelsError}</p>
                         )}
