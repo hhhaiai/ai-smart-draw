@@ -37,7 +37,7 @@ export default function ChatPanel() {
                 if (resolverRef && "current" in resolverRef) {
                     resolverRef.current = resolve;
                 }
-                onExport();
+                onExport('chat');
             }),
             new Promise<string>((_, reject) =>
                 setTimeout(() => reject(new Error("Chart export timed out after 10 seconds")), 10000)
