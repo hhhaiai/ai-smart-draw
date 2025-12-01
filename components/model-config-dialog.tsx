@@ -44,7 +44,11 @@ const baseUrlPresets = [
     { label: "Mistral AI", value: "https://api.mistral.ai/v1" },
     { label: "Cohere", value: "https://api.cohere.ai/v1" },
     { label: "Hugging Face", value: "https://api-inference.huggingface.co" },
-    { label: "自定义", value: "https://api.custom.ai/v1" },
+    { label: "Ollama", value: "http://localhost:11434/api" },
+    { label: "LM Studio", value: "http://localhost:1234/v1" },
+    { label: "Jan AI", value: "http://localhost:1337/v1" },
+    { label: "OpenWebUI", value: "http://localhost:3000/ollama/api" },
+    { label: "更多...", value: "https://api.custom.ai/v1" },
 ];
 
 interface ModelConfigDialogProps {
