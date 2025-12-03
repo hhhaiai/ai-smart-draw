@@ -43,3 +43,4 @@ push-via-ec2.sh
 .claude/settings.local.json
 /.idea/
 /.fastRequest/
+/yolo/

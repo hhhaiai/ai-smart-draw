@@ -1,0 +1,9 @@
+{
+  "build": {
+    "command": "npm run build",
+    "outputDir": ".next/standalone"
+  },
+  "env": {
+    "NEXT_PRIVATE_STANDALONE": "true"
+  }
+}

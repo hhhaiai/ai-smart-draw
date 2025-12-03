@@ -152,6 +152,13 @@ npm run dev
 或者您可以使用此按钮进行部署。
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fshenpeiheng%2Fai-smart-draw)
 
+### Cloudflare 部署
+
+本项目现在支持部署到 Cloudflare Pages。详细说明请参见 [Cloudflare 部署指南](CLOUDFLARE_DEPLOYMENT.md)：
+
+1. **静态站点生成 (SSG)** - 更简单的部署方式
+2. **服务端渲染 (SSR)** - 使用 `@cloudflare/next-on-pages` 实现完整功能
+
 ## 📁 项目结构
 
 ```

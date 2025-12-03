@@ -1,0 +1,6 @@
+{
+  "build": {
+    "command": "npm run pages:build",
+    "outputDir": ".vercel/output/static"
+  }
+}
