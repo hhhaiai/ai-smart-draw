@@ -144,16 +144,10 @@ npm run dev
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+Or you can deploy by this button.
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fshenpeiheng%2Fai-smart-draw)
-
-### Cloudflare Deployment
-
-This project now supports deployment to Cloudflare Pages. See [Cloudflare Deployment Guide](CLOUDFLARE_DEPLOYMENT.md) for detailed instructions:
-
-1. **Static Site Generation (SSG)** - Simpler deployment approach
-2. **Server Side Rendering (SSR)** - Full functionality with `@cloudflare/next-on-pages`
 
 ## 📁 Project Structure
 
