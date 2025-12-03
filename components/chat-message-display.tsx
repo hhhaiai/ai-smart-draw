@@ -131,7 +131,7 @@ export function ChatMessageDisplay({
                         {input && Object.keys(input).length > 0 && (
                             <button
                                 onClick={toggleExpanded}
-                                className="text-xs text-gray-500 hover:text-gray-700"
+                                className="ml-2 text-xs text-blue-500 hover:text-blue-700 px-1 py-1"
                             >
                                 {isExpanded ? "隐藏" : "显示"}
                             </button>

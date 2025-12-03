@@ -78,6 +78,7 @@ export function PlantUMLChatMessageDisplay({
         const callId = part.toolCallId;
         const { state, input, output } = part;
         const isExpanded = expandedTools[callId] ?? false;
+        const toolName = part.type?.replace("tool-", "");
 
         return (
             <div
@@ -86,7 +87,7 @@ export function PlantUMLChatMessageDisplay({
             >
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                        <div className="text-xs">工具: display_plantuml</div>
+                        <div className="text-xs">工具: {toolName}</div>
                         {input && Object.keys(input).length > 0 && (
                             <button
                                 onClick={() =>
@@ -95,7 +96,7 @@ export function PlantUMLChatMessageDisplay({
                                         [callId]: !isExpanded,
                                     }))
                                 }
-                                className="text-xs text-gray-500 hover:text-gray-700"
+                                className="ml-2 text-xs text-blue-500 hover:text-blue-700 px-1 py-1"
                             >
                                 {isExpanded ? "隐藏" : "显示"}
                             </button>
@@ -116,7 +117,7 @@ export function PlantUMLChatMessageDisplay({
                             </div>
                         ) : state === "output-available" ? (
                             <div className="text-green-600">
-                                {output || "PlantUML updated"}
+                                {output || "Diagram generated"}
                             </div>
                         ) : state === "output-error" ? (
                             <div className="text-red-600">
