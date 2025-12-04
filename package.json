@@ -8,8 +8,8 @@
     "start": "next start --port 6001",
     "lint": "next lint",
     "cf:build": "npx @cloudflare/next-on-pages@1",
-    "preview": "npm run pages:build && wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
-    "cf:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static"
+    "preview": "npm run cf:build && wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
+    "cf:deploy": "npm run cf:build && wrangler pages deploy .vercel/output/static"
   },
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^3.0.62",
