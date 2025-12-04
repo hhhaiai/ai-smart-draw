@@ -73,7 +73,9 @@ Replace `YOUR_PROJECT_NAME` with your actual Cloudflare Pages project name.
 
 ## Configuration Files
 
-- [wrangler.jsonc](wrangler.jsonc): Contains Cloudflare Pages configuration including compatibility flags
+- [wrangler.jsonc](wrangler.jsonc): Contains Cloudflare Pages configuration including compatibility flags and project name
+  - Update the "name" field in this file to match your Cloudflare Pages project name
+  - The "pages_build_output_dir" field specifies the build output directory
 - [next.config.ts](next.config.ts): Next.js configuration with edge runtime export
 
 ## Edge Runtime
@@ -94,3 +96,4 @@ If you encounter issues during deployment:
 2. Check that you're using compatible Node.js APIs (use `nodejs_compat` flag)
 3. Verify that your build command in Cloudflare Pages settings is set to `npm run pages:build`
 4. Confirm that the build output directory is set to `.vercel/output/static`
+5. Ensure the "name" field in wrangler.jsonc matches your Cloudflare Pages project name
